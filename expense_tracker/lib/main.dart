@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.purple,
           accentColor: Colors.amber,
+          errorColor: Colors.red,
           fontFamily: 'Quicksand',
           appBarTheme: AppBarTheme(
               textTheme: ThemeData
@@ -43,22 +44,27 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  void _addNewTransaction(String title, double amount) {
+  void _addNewTransaction(String title, double amount, DateTime chosenDate) {
     final newTrx = Transaction(
         id: DateTime.now().toString(),
         title: title,
         amount: amount,
-        date: DateTime.now());
+        date: chosenDate
+    );
     setState(() {
       _userTransactions.add(newTrx);
     });
   }
 
-  final List<Transaction> _userTransactions = [
-    Transaction(
-        id: 'trx1', title: 'Shoes', amount: 16.09, date: DateTime.now()),
-    Transaction(id: 'trx2', title: 'Chair', amount: 19.92, date: DateTime.now())
-  ];
+  void _deleteTransaction(String id){
+    setState(() {
+        _userTransactions.removeWhere((element){
+          return element.id == id;
+        });
+    });
+  }
+
+  final List<Transaction> _userTransactions = [];
 
   List<Transaction> get _recentTransactions {
     return List<Transaction>.of(
@@ -92,15 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Container(
           child: ListView(
             children: [
-              Card(
-                color: Colors.blue,
-                child: Container(width: double.infinity, child: Text('Chart')),
-                elevation: 5,
-              ),
               Column(
                 children: [
                   Chart(_recentTransactions),
-                  TransactionList(_userTransactions)
+                  TransactionList(_userTransactions, _deleteTransaction)
                 ],
               )
             ],
