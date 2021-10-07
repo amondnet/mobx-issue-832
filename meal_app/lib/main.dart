@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:meal_app/dummy_data.dart';
 import 'package:meal_app/screens/category_meals_screen.dart';
