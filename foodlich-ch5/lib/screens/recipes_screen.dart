@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fooderlich/models/simple_recipe.dart';
+import '../models/simple_recipe.dart';
 import '../components/recipes_grid_view.dart';
 import '../api/mock_fooderlich_service.dart';
 import '../components/components.dart';
