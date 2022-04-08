@@ -56,11 +56,9 @@ class _AuthorCardState extends State<AuthorCard> {
             iconSize: 30,
             color: Colors.red[400],
             onPressed: () {
-              setState(
-                () {
-                  _isFavorited = !_isFavorited;
-                },
-              );
+              setState(() {
+                _isFavorited = !_isFavorited;
+              });
             },
           ),
         ],

@@ -14,10 +14,7 @@ class GroceryScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          final manager = Provider.of<GroceryManager>(
-            context,
-            listen: false,
-          );
+          final manager = Provider.of<GroceryManager>(context, listen: false);
           manager.createNewItem();
         },
       ),

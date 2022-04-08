@@ -26,13 +26,10 @@ class AppStateManager extends ChangeNotifier {
     _loggedIn = await _appCache.isUserLoggedIn();
     _onboardingComplete = await _appCache.didCompleteOnboarding();
 
-    Timer(
-      const Duration(milliseconds: 2000),
-      () {
-        _initialized = true;
-        notifyListeners();
-      },
-    );
+    Timer(const Duration(milliseconds: 2000), () {
+      _initialized = true;
+      notifyListeners();
+    });
   }
 
   void login(String username, String password) async {
@@ -41,7 +38,7 @@ class AppStateManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void completeOnboarding() async {
+  void onboarded() async {
     _onboardingComplete = true;
     await _appCache.completeOnboarding();
     notifyListeners();

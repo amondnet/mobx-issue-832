@@ -199,7 +199,7 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
               },
             ),
           ],
-        ),
+        )
       ],
     );
   }
@@ -299,11 +299,10 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
               builder: (context) {
                 return AlertDialog(
                   content: BlockPicker(
-                    pickerColor: Colors.white,
-                    onColorChanged: (color) {
-                      setState(() => _currentColor = color);
-                    },
-                  ),
+                      pickerColor: Colors.white,
+                      onColorChanged: (color) {
+                        setState(() => _currentColor = color);
+                      }),
                   actions: [
                     TextButton(
                       child: const Text('Save'),
@@ -369,7 +368,10 @@ class _GroceryItemScreenState extends State<GroceryItemScreen> {
       _importance = originalItem.importance;
       _currentColor = originalItem.color;
       final date = originalItem.date;
-      _timeOfDay = TimeOfDay(hour: date.hour, minute: date.minute);
+      _timeOfDay = TimeOfDay(
+        hour: date.hour,
+        minute: date.minute,
+      );
       _dueDate = date;
     }
 

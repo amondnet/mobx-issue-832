@@ -9,8 +9,10 @@ class GroceryManager extends ChangeNotifier {
 
   List<GroceryItem> get groceryItems => List.unmodifiable(_groceryItems);
   int get selectedIndex => _selectedIndex;
+
   GroceryItem? get selectedGroceryItem =>
-      selectedIndex != -1 ? _groceryItems[selectedIndex] : null;
+      _selectedIndex != -1 ? _groceryItems[_selectedIndex] : null;
+
   bool get isCreatingNewItem => _createNewItem;
 
   void createNewItem() {
