@@ -18,7 +18,7 @@ class AppRouter extends RouterDelegate<AppLink>
     required this.groceryManager,
     required this.profileManager,
   }) : navigatorKey = GlobalKey<NavigatorState>() {
-    appStateManager.addListener(notifyListeners);
+    appStateManager.addxListener(notifyListeners);
     groceryManager.addListener(notifyListeners);
     profileManager.addListener(notifyListeners);
   }
