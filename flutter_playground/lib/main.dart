@@ -1,68 +1,48 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(FadeAppTest());
+void main() => runApp(MaterialApp(home: DemoApp()));
+
+class DemoApp extends StatelessWidget {
+  Widget build(BuildContext context) => Scaffold(body: Signature());
 }
 
-class FadeAppTest extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
+class Signature extends StatefulWidget {
+  SignatureState createState() => SignatureState();
+}
+
+class SignatureState extends State<Signature> {
+  List<Offset?> _points = <Offset>[];
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Fade Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return GestureDetector(
+      onPanUpdate: (DragUpdateDetails details) {
+        setState(() {
+          RenderBox? referenceBox = context.findRenderObject() as RenderBox;
+          Offset localPosition = referenceBox.globalToLocal(details.globalPosition);
+          _points = List.from(_points)..add(localPosition);
+        });
+      },
+      onPanEnd: (DragEndDetails details) => _points.add(null),
+      child: CustomPaint(
+        painter: SignaturePainter(_points),
+        size: Size.infinite,
       ),
-      home: MyFadeTest(title: 'Fade Demo'),
     );
   }
 }
 
-class MyFadeTest extends StatefulWidget {
-  MyFadeTest({Key? key, required this.title}) : super(key: key);
-  final String title;
-  @override
-  _MyFadeTest createState() => _MyFadeTest();
-}
-
-class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
-  late AnimationController controller;
-  late CurvedAnimation curve;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = AnimationController(
-      duration: const Duration(milliseconds: 2000),
-      vsync: this,
-    );
-    curve = CurvedAnimation(
-      parent: controller,
-      curve: Curves.easeIn,
-    );
+class SignaturePainter extends CustomPainter {
+  SignaturePainter(this.points);
+  final List<Offset?> points;
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint()
+      ..color = Colors.black
+      ..strokeCap = StrokeCap.round
+      ..strokeWidth = 5.0;
+    for (int i = 0; i < points.length - 1; i++) {
+      if (points[i] != null && points[i + 1] != null)
+        canvas.drawLine(points[i]!, points[i + 1]!, paint);
+    }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: FadeTransition(
-          opacity: curve,
-          child: FlutterLogo(
-            size: 100.0,
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Fade',
-        onPressed: () {
-          controller.forward();
-        },
-        child: Icon(Icons.brush),
-      ),
-    );
-  }
+  bool shouldRepaint(SignaturePainter other) => other.points != points;
 }
