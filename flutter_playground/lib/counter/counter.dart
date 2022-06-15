@@ -9,13 +9,11 @@ class Counter = _Counter with _$Counter;
 
 abstract class _Counter with Store {
   @readonly
-  @observable
   int _value = 0;
 
   @readonly
   bool _loading = false;
 
-  @action
   Future<void> makeApiCall() async{
     _loading = true;
     // simulating api call
@@ -23,7 +21,6 @@ abstract class _Counter with Store {
     _loading = false;
   }
 
-  @action
   Future<void> increment() async {
     _value = 0;
     await Future<dynamic>.delayed(const Duration(milliseconds: 1000));

@@ -43,22 +43,6 @@ mixin _$Counter on _Counter, Store {
     });
   }
 
-  late final _$makeApiCallAsyncAction =
-      AsyncAction('_Counter.makeApiCall', context: context);
-
-  @override
-  Future<void> makeApiCall() {
-    return _$makeApiCallAsyncAction.run(() => super.makeApiCall());
-  }
-
-  late final _$incrementAsyncAction =
-      AsyncAction('_Counter.increment', context: context);
-
-  @override
-  Future<void> increment() {
-    return _$incrementAsyncAction.run(() => super.increment());
-  }
-
   @override
   String toString() {
     return '''
