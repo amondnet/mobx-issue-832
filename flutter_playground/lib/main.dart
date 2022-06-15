@@ -6,12 +6,39 @@ class DemoApp extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(body: SimpleWidget());
 }
 
-class SimpleWidget extends StatelessWidget{
+class SimpleWidget extends StatefulWidget{
+
+  @override
+  State<SimpleWidget> createState() => _SimpleWidgetState();
+}
+
+class _SimpleWidgetState extends State<SimpleWidget> {
+  final _controller = ScrollController();
+
+
+  @override
+  void initState() {
+    super.initState();
+    print('init state called ....');
+    // Setup the listener.
+    _controller.addListener(() {
+      if (_controller.position.atEdge) {
+        print('called ....');
+        bool isTop = _controller.position.pixels == 0;
+        if (isTop) {
+          print('At the top');
+        } else {
+          print('At the bottom');
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        controller: _controller,
         child: Column(
           children: [
             const SizedBox(height: 100,),
@@ -25,7 +52,7 @@ class SimpleWidget extends StatelessWidget{
                 const Icon(Icons.star, color: Colors.black),
               ],
             ),
-            SizedBox(height: 100,),
+            const SizedBox(height: 100,),
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -38,19 +65,19 @@ class SimpleWidget extends StatelessWidget{
             ),
             ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: 20,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: 100,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text('item $index'),
+                  title: Text('item-phy $index'),
                 );
               },
-            )
+            ),
+            const CircularProgressIndicator(),
           ],
         ),
       ),
     );
   }
-
 }
 
